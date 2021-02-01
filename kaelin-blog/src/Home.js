@@ -3,29 +3,22 @@ import BlogList from './BlogList';
 
 const Home = () => {
 
-    const [blogs, setBlogs] = useState([
-        {title: 'Sample Blog 1', body: 'Pokem ipsum dolor sit amet Typhlosion Rare Candy Mew Durant Crustle Foongus. Fire Hoothoot Razor Leaf Pewter City Murkrow Drapion Vine Whip.', author: 'Kaelin', id: 1},
-        {title: 'Sample Blog 2', body: 'Pokem ipsum dolor sit amet Typhlosion Rare Candy Mew Durant Crustle Foongus. Fire Hoothoot Razor Leaf Pewter City Murkrow Drapion Vine Whip.', author: 'Justin', id: 2},
-        {title: 'Sample Blog 3', body: 'Pokem ipsum dolor sit amet Typhlosion Rare Candy Mew Durant Crustle Foongus. Fire Hoothoot Razor Leaf Pewter City Murkrow Drapion Vine Whip.', author: 'Kaelin', id: 3}
-    ]);
-
-    const [name, setName] = useState('Kaelin');
-
-    const handleDelete = (id) => {
-        const newBlogs = blogs.filter((blog) => blog.id !== id);
-        setBlogs(newBlogs);
-    }
+    const [blogs, setBlogs] = useState(null);
 
     useEffect(() => {
-        console.log(name)
-    }, [name]);
+        fetch('http://localhost:8000/blogs')
+            .then(res => {
+                return res.json()
+            })
+            .then((data) => {
+                console.log(data)
+                setBlogs(data)
+            })        
+    }, []);
 
     return ( 
         <div className="home">
-            <BlogList blogs={blogs} title="All Blogs" />
-            <BlogList blogs={blogs.filter((blog) => blog.author === "Kaelin" )} title="Kaelin's Blogs" handleDelete={handleDelete} />
-            <button onClick={() => setName('Kaelin Alexander')}>Change Name</button>
-            <p>{ name }</p>
+            {blogs && <BlogList blogs={blogs} title="All Blogs" />}
         </div>
      );
 }
