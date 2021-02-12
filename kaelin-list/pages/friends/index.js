@@ -1,3 +1,5 @@
+import styles from '../../styles/Friends.module.css'
+
 export const getStaticProps = async () => {
 
     const res = await fetch('https://jsonplaceholder.typicode.com/users');
@@ -15,7 +17,7 @@ const Friends = ({ friends }) => {
             <h1>All Friends</h1>
             {friends.map(friend => (
                 <div key={friend.id}>
-                    <a>
+                    <a className={styles.single}>
                         <h3>{friend.name}</h3>
                     </a>
                 </div>
