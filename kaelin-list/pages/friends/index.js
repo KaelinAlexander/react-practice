@@ -1,4 +1,5 @@
 import styles from '../../styles/Friends.module.css'
+import Link from 'next/link'
 
 export const getStaticProps = async () => {
 
@@ -16,11 +17,11 @@ const Friends = ({ friends }) => {
         <div>
             <h1>All Friends</h1>
             {friends.map(friend => (
-                <div key={friend.id}>
+                <Link href={'/friends/' + friend.id} key={friend.id}>
                     <a className={styles.single}>
                         <h3>{friend.name}</h3>
                     </a>
-                </div>
+                </Link>
             ))}
         </div>
      );
